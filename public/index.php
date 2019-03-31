@@ -23,15 +23,13 @@ if( ! class_exists( 'VueWPPluginTest' ) ) {
 			$vue_atts = esc_attr( json_encode( [
 				'id' => sanitize_title_with_dashes( $atts['id'], '', 'save' )
 			] ) );
-			return file_get_contents(plugins_url('/app.html',__FILE__ ));
+			return preg_replace('/{{pluginBasePath}}/', plugin_dir_url( __FILE__ ), file_get_contents(plugins_url('/index.html',__FILE__ )));
 		}
 
 		// Only enqueue scripts if we're displaying a post that contains the shortcode
 		public function scripts() {
 		    global $post;
 		    if( has_shortcode( $post->post_content, $this->shortcode_name ) ) {
-
-		        echo '<script>window.wpPluginsBasePath = "' . plugins_url() . '"</script>';
 		        wp_enqueue_script( 'vue', plugin_dir_url( __FILE__ ) . 'libs/vue/vue.min.js', [], '2.6.10' );
 		    }
 		}

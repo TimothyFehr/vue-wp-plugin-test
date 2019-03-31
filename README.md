@@ -1,4 +1,4 @@
-# vehqa-admin-plugin
+# vue-wp-plugin-test
 
 ## Project setup
 ```
