@@ -1,0 +1,23 @@
+{
+    "name": "fehrcoding/vue-wp-test-plugin",
+    "description": "WordPress Plugin with a integrated Vuejs Application",
+    "keywords": ["wordpress", "plugin", "vueJs", "TimothyFehr"],
+    "homepage": "https://fehrcoding.ch",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Timothy Fehr",
+            "email": "timothy.fehr@fehrcoding.ch",
+            "homepage": "https://fehrcoding.ch"
+        }
+    ],
+    "config": {
+        "vendor-dir": "public/libs/composer"
+    },
+    "type": "wordpress-plugin",
+    "require": {
+        "php": ">=7.2",
+        "composer/installers": "^1.6.0",
+        "webonyx/graphql-php": "^0.13.1"
+    }
+}

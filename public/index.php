@@ -10,6 +10,8 @@ Author URI: https://fehrcoding.ch
 // Shortcode Definition
 // [vue-wp-plugin-test id="vue-wp-plugin-test"]
 
+require_once 'libs/composer/autoload.php';
+
 if( ! class_exists( 'VueWPPluginTest' ) ) {
 	class VueWPPluginTest {
 
@@ -36,7 +38,4 @@ if( ! class_exists( 'VueWPPluginTest' ) ) {
 	}
 	(new VueWPPluginTest())->register();
 }
-
-
-
 
