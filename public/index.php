@@ -26,7 +26,6 @@ class VueWPPluginTest {
 
         if (is_admin()) {
             register_activation_hook(__FILE__, array(&$this, 'activate'));
-            register_uninstall_hook(__FILE__, array(&$this, 'uninstall'));
         }
 
         // Add Javascript and CSS for admin screens
@@ -79,9 +78,12 @@ class VueWPPluginTest {
             .") $charset;";
           require_once(ABSPATH.'wp-admin/includes/upgrade.php');
           dbDelta($sql);
+
+        // Register the uninstall hook only on activation
+        register_uninstall_hook(__FILE__, array(&$this, 'uninstall'));
     }
 
-    public function uninstall() {
+    public function uninstall() {;
         global $wpdb;
         $table = $wpdb->prefix . $this->tablename;
         $sql = "DROP TABLE IF EXISTS $table";

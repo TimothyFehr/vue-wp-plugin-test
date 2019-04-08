@@ -1,13 +1,17 @@
 <?php
 global $table_prefix;
 
-// include wordpress Configfile to get access to Database
+//// include wordpress Configfile to get access to Database
+//require_once('../../../wp-config.php');
+//$conn = new mysqli(constant("DB_HOST"), constant("DB_USER"), constant("DB_PASSWORD"), constant("DB_NAME"));
+//// Check connection
+//if ($conn->connect_error) {
+//    die("Connection failed: " . $conn->connect_error);
+//}
+
+
 require_once('../../../wp-config.php');
-$conn = new mysqli(constant("DB_HOST"), constant("DB_USER"), constant("DB_PASSWORD"), constant("DB_NAME"));
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require_once("../../../wp-includes/wp-db.php");
 
 $table = $table_prefix . 'helloWorldDB';
 
