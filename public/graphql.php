@@ -1,4 +1,17 @@
 <?php
+global $table_prefix;
+
+// include wordpress Configfile to get access to Database
+require_once('../../../wp-config.php');
+$conn = new mysqli(constant("DB_HOST"), constant("DB_USER"), constant("DB_PASSWORD"), constant("DB_NAME"));
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$table = $table_prefix . 'helloWorldDB';
+
+
 // Test this using following command
 // php -S localhost:8080 ./graphql.php &
 // curl http://localhost:8080 -d '{"query": "query { echo(message: \"Hello World\") }" }'
@@ -8,6 +21,7 @@ use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 use GraphQL\GraphQL;
+
 try {
     $queryType = new ObjectType([
         'name' => 'Query',
@@ -33,7 +47,25 @@ try {
                     'y' => ['type' => Type::int()],
                 ],
                 'resolve' => function ($root, $args) {
-                    return $args['x'] + $args['y'];
+                    global $conn;
+                    global $table;
+                    $value = $args['x'] + $args['y'];
+
+                    // Attempt insert query execution
+                    $sql = "INSERT INTO $table ("
+                        ."id,"
+                        ."result"
+                        .")  VALUES ("
+                        ."NULL,"
+                        ."'".$value."'"
+                        .");";
+                    if(mysqli_query($conn, $sql)){
+                        echo "Records inserted successfully.";
+                    } else{
+                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+                    }
+
+                    return $value;
                 },
             ],
         ],
@@ -58,5 +90,10 @@ try {
         ]
     ];
 }
+
+
+// Close connection
+mysqli_close($conn);
+
 header('Content-Type: application/json; charset=UTF-8');
 echo json_encode($output);
